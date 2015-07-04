@@ -29,6 +29,8 @@ OPTIONS:
    -p      \$APP_EB_InstanceProfileName | Elastic Beanstalk IAM Profile
    -a      \$APP_EB_ApplicationName     | Elastic Beanstalk Application name
    -e      \$APP_EB_EnvironmentName     | Elastic Beanstalk Environment name
+   -r      \$APP_EB_Region              | Elastic Beanstalk Environment region
+   -t      \$APP_EB_EnvironmentType     | Elastic Beanstalk Environment type
 
 EOF
 }
@@ -43,9 +45,11 @@ APP_AWS_SECRET_KEY=$APP_AWS_SECRET_KEY
 APP_EB_InstanceProfileName=$APP_EB_InstanceProfileName
 APP_EB_ApplicationName=$APP_EB_ApplicationName
 APP_EB_EnvironmentName=$APP_EB_EnvironmentName
+APP_EB_Region=$APP_EB_Region
+APP_EB_EnvironmentType=$APP_EB_EnvironmentType
 
 # Read passed options
-while getopts “hw:v:k:s:p:a:e:” OPTION
+while getopts “hw:v:k:s:p:a:e:r:t:” OPTION
 do
      case $OPTION in
          h)
@@ -72,6 +76,12 @@ do
              ;;
          e)
              APP_EB_EnvironmentName=$OPTARG
+             ;;
+         r)
+             APP_EB_Region=$OPTARG
+             ;;
+         t)
+             APP_EB_EnvironmentType=$OPTARG
              ;;
          ?)
              usage
@@ -132,6 +142,9 @@ if [ -z $APP_EB_Region ]; then
     APP_EB_Region="us-east-1"
 fi
 if [ -z $APP_EB_CLI_VERSION ]; then
+    APP_EB_CLI_VERSION="2.6.4"
+fi
+if [ -z $APP_EB_Region ] || [-z APP_EB_Region ]; then
     APP_EB_CLI_VERSION="2.6.4"
 fi
 
